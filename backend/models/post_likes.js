@@ -1,23 +1,32 @@
-const {DataTypes} = require('sequelize')
-const sequelize = require('../dataBase/configDataBase.js')
-const POST_LIKES = sequelize.define('POST_LIKES',{
-    USER_ID:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        refences:{
-            model:'USERS',
-            key:'ID'
-        }
-        
-    },
-    POST_ID:{
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        refences:{
-            model:'POST',
-            key:'ID'
-        }
-    }
-},{tableName:'POST_LIKE',timestamps:true})
+const { DataTypes } = require('sequelize');
+const sequelize = require('../dataBase/configDataBase.js');
 
-module.exports = POST_LIKES;
+const PostLike = sequelize.define('postlike', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id',
+    }
+  },
+  post_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'posts',
+      key: 'id',
+    }
+  },
+}, {
+  tableName: 'postlikes',
+  timestamps: true,
+ 
+});
+
+module.exports = PostLike;

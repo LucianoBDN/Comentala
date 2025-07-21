@@ -1,41 +1,69 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require('../dataBase/configDataBase.js')
+const sequelize = require("../dataBase/configDataBase.js");
 
 const Posts = sequelize.define(
   "posts",
   {
-    ID: {
+    id: {
+      primaryKey: true,
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
     },
-    TITLE: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    BODY: {
+    body: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    USER_ID: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "USERS",
-        key: "ID",
+        model: "users",
+        key: "id",
       },
     },
-    STATUS: {
+    status: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    LIKES:{
-        type: DataTypes.INTEGER,
+    likes: {
+      type: DataTypes.INTEGER,
     },
-    DISLIKES:{
-        type: DataTypes.INTEGER,
-    }
+    dislikes: {
+      type: DataTypes.INTEGER,
+    },
   },
-  { tableName: "COMMENT_DISLIKES", timestamps: true }
+  {
+    tableName: "posts",
+    timestamps: true,
+    
+  }
 );
+
+// A post belongs to a user"
+Posts.associate = (models) => {
+  Posts.belongsTo(models.User, {
+    foreignKey: "user_id",
+  });
+  // A post has many comments
+  Posts.hasMany(models.Comment, {
+    foreignKey: "post_id",
+  });
+
+    //A post has many likes
+  Posts.hasMany(models.PostLike,{
+    foreignKey: "post_id"
+  })
+
+  //A post has many dislikes
+  Posts.hasMany(models.PostDisLike,{
+    foreignKey: "post_id"
+  })
+
+};
 
 module.exports = Posts;

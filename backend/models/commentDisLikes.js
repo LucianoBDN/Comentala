@@ -1,24 +1,31 @@
-const {DataTypes} = require('sequelize')
-const sequelize = require('../dataBase/configDataBase.js')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../dataBase/configDataBase.js');
 
-const COMMENT_DISLIKES = sequelize.define('COMMENT_DISLIKES',{
-    USER_ID:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        refences:{
-            model:'USERS',
-            key:'ID'
-        }
-
-    },
-    COMMENT_ID:{
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        refences:{
-            model:'COMMENTS',
-            key:'ID'
-        }
+const CommentDisLike = sequelize.define('commentdislike', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id',
     }
-},{tableName:'COMMENT_DISLIKES',timestamps:true})
+  },
+  comment_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'comments',
+      key: 'id',
+    }
+  },
+}, {
+  tableName: 'commentdislikes',
+  timestamps: true,
+});
 
-module.exports =COMMENT_DISLIKES;
+module.exports = CommentDisLike;

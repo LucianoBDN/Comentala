@@ -1,25 +1,24 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require('../dataBase/configDataBase.js')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../dataBase/configDataBase.js');
 
-const FOLLOWS = sequelize.define(
-  "FOLLOWS",
-  {
-    FOLLOWING_USER_ID: {
-      type: DataTypes.INTEGER,
-      refences: {
-        model: "USERS",
-        key: "ID",
-      },
-    },
-    FOLLOWED_USER_ID: {
-      type: DataTypes.INTEGER,
-      refences: {
-        model: "USERS",
-        key: "ID",
-      },
-    },
+const Follows = sequelize.define('follows', {
+  following_user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'users',
+      key: 'id',
+    }
   },
-  { tableName: "FOLLOWS", timestamps: true }
-);
+  followed_user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'users',
+      key: 'id',
+    }
+  },
+}, {
+  tableName: 'follows',
+  timestamps: true,
+});
 
-module.export = FOLLOWS;
+module.exports = Follows;

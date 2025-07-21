@@ -1,51 +1,83 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require('../dataBase/configDataBase.js')
+const sequelize = require("../dataBase/configDataBase.js");
 
-const USERS = sequelize.define(
-  "users",
+const User = sequelize.define(
+  "user",
   {
-    ID: {
-      primaryKey:true,
+    id: {
+      primaryKey: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement:true
+      autoIncrement: true,
     },
-    USER_NAME: {
+    user_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ROLE: {
+    role: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    EMAIL: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    PASSWORD: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
-  { tableName: "USERS", timestamps: true }
+  {
+    tableName: "users",
+    timestamps: true,
+    
+  }
 );
 
-USERS.associate = (models) =>{
-  USERS.belongsToMany(models.USERS,{
-    through: 'FOLLOWS',
-    as:'FOLLOWING',
-    foreignKey:'FOLLOWING_USER_ID',
-    otherKey:'FOLLOWED_USER_ID'
+User.associate = (models) => {
+  User.belongsToMany(models.User, {
+    through: "follows", // real name of the table
+    as: "following", // Users I follow
+    foreignKey: "following_user_id",
+    otherKey: "followed_user_id",
   });
 
-  USERS.belongsToMany(models.USERS,{
-    through: 'FOLLOWS',
-    as:'FOLLOWED',
-    foreignKey:'FOLLOWED_USER_ID',
-    otherKey:'FOLLOWING_USER_ID'   
-  })
+  User.belongsToMany(models.User, {
+    through: "follows",
+    as: "followers", // Users who follow me
+    foreignKey: "followed_user_id",
+    otherKey: "following_user_id",
+  });
+
+  // A user has many posts
+  User.hasMany(models.Posts, {
+    foreignKey: "user_id",
+  });
+
+  // A user has many comments
+  User.hasMany(models.Comment, {
+    foreignKey: "user_id",
+  });
+
+  //A user can give many likes to a post.
+  User.hasMany(models.PostLike, {
+    foreignKey: "user_id",
+  });
+
+  //A user can give many dislikes to a post.
+  User.hasMany(models.PostDisLike, {
+    foreignKey: "user_id",
+  });
+
+    //A user can give many likes to a comment
+  User.hasMany(models.CommentLike, {
+    foreignKey: "user_id",
+  });
   
-}
+  //A user can give many dislikes to a comment
+  User.hasMany(models.CommentDisLike, {
+    foreignKey: "user_id",
+  });
+};
 
-
-module.exports = USERS;
+module.exports = User;
