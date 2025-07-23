@@ -26,21 +26,26 @@ const Posts = sequelize.define(
         key: "id",
       },
     },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true, // it is optional
+    },
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
     likes: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     dislikes: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   },
   {
     tableName: "posts",
     timestamps: true,
-    
   }
 );
 
@@ -54,16 +59,15 @@ Posts.associate = (models) => {
     foreignKey: "post_id",
   });
 
-    //A post has many likes
-  Posts.hasMany(models.PostLike,{
-    foreignKey: "post_id"
-  })
+  //A post has many likes
+  Posts.hasMany(models.PostLike, {
+    foreignKey: "post_id",
+  });
 
   //A post has many dislikes
-  Posts.hasMany(models.PostDisLike,{
-    foreignKey: "post_id"
-  })
-
+  Posts.hasMany(models.PostDisLike, {
+    foreignKey: "post_id",
+  });
 };
 
 module.exports = Posts;

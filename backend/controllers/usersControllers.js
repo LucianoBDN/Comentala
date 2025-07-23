@@ -24,7 +24,7 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const role = req.body.role || "admin"; // Default to "admin" if not provided
+    const role = req.body.role || "user"; // Default to "user" if not provided
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await User.create({
       user_name: req.body.user_name,
@@ -42,15 +42,14 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const role = req.body.role || "admin";
-
     const updatedFields = {
       user_name: req.body.user_name,
-      role: role,
       email: req.body.email,
+      password: hashedPassword
     };
     if (req.body.password) {
       updatedFields.password = await bcrypt.hash(req.body.password, 10);
