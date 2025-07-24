@@ -26,6 +26,7 @@ const createPost = async (req, res) => {
       user_id: req.body.user_id,
       image: req.body.image || null, // Optional field
     });
+    res.status(201).json(newPost);
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error });
   }
