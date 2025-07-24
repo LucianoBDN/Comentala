@@ -11,9 +11,11 @@ app.use(express.json())
 // Api routes
 const usersRoutes = require("./routes/usersRouter.js");
 const postsRoutes = require("./routes/postsRouter.js");
+const commentsRoutes = require("./routes/commentsRouter.js");
 
 app.use("/users", usersRoutes);
 app.use("/posts", postsRoutes);
+app.use("/comments", commentsRoutes);
 
 
 

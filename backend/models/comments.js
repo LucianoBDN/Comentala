@@ -29,9 +29,11 @@ const Comment = sequelize.define('comment', {
   },
   likes: {
     type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
   dislikes: {
     type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
 }, {
   tableName: 'comments',
