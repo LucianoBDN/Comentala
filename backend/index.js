@@ -9,13 +9,15 @@ app.use(cors())
 app.use(express.json())
 
 // Api routes
-const usersRoutes = require("./routes/usersRouter.js");
-const postsRoutes = require("./routes/postsRouter.js");
-const commentsRoutes = require("./routes/commentsRouter.js");
+const usersRoutes = require("./routes/usersRoutes.js");
+const postsRoutes = require("./routes/postsRoutes.js");
+const commentsRoutes = require("./routes/commentsRoutes.js");
+const followsRoutes = require("./routes/followsRoutes.js");
 
 app.use("/users", usersRoutes);
 app.use("/posts", postsRoutes);
 app.use("/comments", commentsRoutes);
+app.use("/follows", followsRoutes);
 
 
 
