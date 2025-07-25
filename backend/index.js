@@ -13,12 +13,13 @@ const usersRoutes = require("./routes/usersRoutes.js");
 const postsRoutes = require("./routes/postsRoutes.js");
 const commentsRoutes = require("./routes/commentsRoutes.js");
 const followsRoutes = require("./routes/followsRoutes.js");
+const authRoutes = require("./routes/authRoutes");
 
 app.use("/users", usersRoutes);
 app.use("/posts", postsRoutes);
 app.use("/comments", commentsRoutes);
 app.use("/follows", followsRoutes);
-
+app.use("/auth", authRoutes)
 
 
 
